@@ -1,0 +1,91 @@
+<!-- app/templates/dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kafka Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #eee;
+            margin: 0;
+            padding: 2rem;
+        }
+        h1 {
+            text-align: center;
+            color: #00c3ff;
+        }
+        form {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        input, textarea {
+            padding: 0.5rem;
+            margin: 0.2rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            width: 200px;
+        }
+        button {
+            background-color: #00c3ff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border-bottom: 1px solid #333;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        th {
+            color: #00c3ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kafka Admin Dashboard</h1>
+
+    <form action="/add" method="POST">
+        <input type="text" name="name" placeholder="Topic name" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        <button type="submit">Add Topic</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Topic</th>
+                <th>Description</th>
+                <th>Created At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for topic in topics %}
+            <tr>
+                <td>{{ topic.id }}</td>
+                <td>{{ topic.name }}</td>
+                <td>{{ topic.description }}</td>
+                <td>{{ topic.created_at }}</td>
+                <td>
+                    <form action="/delete/{{ topic.id }}" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
